@@ -134,13 +134,16 @@ function mapMarkers(locations) {
 	markers.push(marker);//stores marker in markers array
 
 	//event listener to make info window appear on map when marker is clicked
-	marker.addListener('click' , function() {
-		populateInfoWindow(this , largeInfoWindow);//calling function for info window to appear
-		setCenter(this.position, 15);//calling set center function to change center to that of marker
-	});
+	marker.addListener('click' , openInfo);
 	
 }
 
+function openInfo() {
+	var marker = this;
+	populateInfoWindow(this , largeInfoWindow);//calling function for info window to appear
+	setCenter(this.position, 15);//calling set center function to change center to that of marker
+}
+	
 var largeInfoWindow = new google.maps.InfoWindow({maxWidth: 300});
 
 //function that makes info window to appear
