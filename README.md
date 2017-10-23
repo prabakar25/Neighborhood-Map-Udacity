@@ -1,18 +1,18 @@
 ## Neighborhood Map Project
 
-This project consists of the neighbourhood map  which consists of the information about quite a few interesting places around my place using the Google Maps API and apixu api to dispaly some weather reports for the location.
+This project consists of the neighborhood map  which consists of the information about quite a few interesting places around my place using the Google Maps API and apixu api to dispaly some weather reports for the location.
 
 ## Getting started
 
 The resource files for the project are available at the following github repository link. To view the page simply download the zip or clone the repository. 
 
-https://github.com/prabakar25/Neighbourhood-Map-Udacity
+https://github.com/prabakar25/Neighborhood-Map-Udacity
 
 Open the *index.html* file to view the webpage.
 
 Alternatively you can view the live version of the project in the following link
 
-https://prabakar25.github.io/neighbourhoodmap/
+https://prabakar25.github.io/neighborhoodmap/
 
 ## Features:
 
