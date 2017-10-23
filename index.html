@@ -9,13 +9,13 @@
 </head>
 <body>
 	<div id = "map"></div>
-	<div class="toggleButton"><button id="toggleNav"><strong>show/hide navbar</strong></button></div>
-	<div class="searchBar">		
-		<h2 class="searchBarHeading">Neighborhood Map</h2>
-		<div class="searchBox">
-	        <input placeholder="search from list of markers....." type="search" data-bind="textInput: query"/>
+	<div class="ToggleButton"><button id="toggleNav" data-bind="click: toggleNav"><strong>show/hide navbar</strong></button></div>
+	<div class="SearchBar" data-bind="visible: showNav">		
+		<h2 class="SearchBarHeading">Neighborhood Map</h2>
+		<div class="SearchBox">
+	        <input placeholder="search from list of markers....." type="search" data-bind="textInput: query"></input>
 		</div>
-		<div class="scroll-list">
+		<div class="Scroll-list">
 		    <div>
 	       		<ul data-bind="foreach: search">
 	        		<li data-bind="text: title, click: $parent.openInfoWindow"></li>
