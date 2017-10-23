@@ -89,7 +89,7 @@ var places = [
 //variable to store markers
 var markers = [];
 
-var map;
+var map, clientId, clientSecret;
 //function to iniitialize the map
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -119,12 +119,16 @@ function mapMarkers(locations) {
 	//loop to create markers
 	for( var i = 0; i < locations.length; i++) {
 		var position = locations[i].location;
+		var lat = locations[i].location.lat;
+		var lng = locations[i].location.lng;
 		var title = locations[i].title;
 		var url = locations[i].url;
 		var image = locations[i].image;
 		var marker = new google.maps.Marker( {
 		position: position,
 		map: map,
+		lat: lat,
+		lng: lng,
 		title: title,
 		url: url,
 		image: image,
@@ -132,26 +136,46 @@ function mapMarkers(locations) {
 		id: i
 	});
 	markers.push(marker);//stores marker in markers array
-
 	//event listener to make info window appear on map when marker is clicked
 	marker.addListener('click' , openInfo);
-	
 }
 
 function openInfo() {
-	var marker = this;
+	var marker =this;
 	populateInfoWindow(this , largeInfoWindow);//calling function for info window to appear
 	setCenter(this.position, 15);//calling set center function to change center to that of marker
-}
-	
+	}
+
 var largeInfoWindow = new google.maps.InfoWindow({maxWidth: 300});
 
 //function that makes info window to appear
 function populateInfoWindow(marker , infoWindow) {
 	infoWindow.marker = marker;
-	infoWindow.setContent('<div>' + '<strong>'+ marker.title + '</strong>' + '<br>' + '<img style="margin-top: 5px" src="' + marker.image + 
+
+	//url to get weather report from apixu
+	var apiUrl = "http://api.apixu.com/v1/current.json?key=5e1425ca389a40ecabf184728172210&q=" + marker.lat + "," + marker.lng;
+	//ajax request 
+	$.getJSON(apiUrl).done(function(marker) { 
+       		self.localTime = marker.location.localtime;
+       		self.temperature = marker.current.temp_c;
+       		self.condition = marker.current.condition.text;
+    	//info window content from api
+    	var apiInfo = '<div>' + "Local Time: " + self.localTime + '<br>' + "Weather: " + self.temperature + ' °C , ' + self.condition + '<br>' + "Weather reports from  " +
+    	 '<a target="_blank" href = "https://www.apixu.com/">' + '<img style="height: 25px"  src = "http://blog.apixu.com/wp-content/uploads/2015/08/apixu-logo-black.png" alt = "api logo">' + '</a>' + '</div>';
+
+		infoWindow.setContent(markerInfo + apiInfo);
+		}).fail(function() {
+                // Send alert
+                alert(
+                    "There was an issue loading the API. Please check the data."
+                );
+            });
+	
+	//info window content from model
+	var markerInfo = '<div>' + '<strong>'+ marker.title + '</strong>' + '<br>' + '<br>' + '<img src="' + marker.image + 
                                     '" alt="Street View Image of ' + marker.title + '"><br><hr style="margin-bottom: 5px">' + 
-						  '<br>' + "latlng " + marker.position + '<br>' + '<a target="_blank" href =' + marker.url + '>' + marker.url + '</a>' + '</div>');
+						  '<br>' + "latlng " + marker.position + '<br>' + '<a target="_blank" href =' + marker.url + '>' + marker.url + '</a>' + '</div>';
+	
 	infoWindow.open(map , marker);
 	marker.setAnimation(google.maps.Animation.BOUNCE);//to animate marker when clicked
 	//timeout function to stop bouncing of markers
@@ -175,6 +199,12 @@ function setCenter(center, zoom = 12) {
 var viewModel = function() {
 	
 	var self = this;
+	//observable to toggle between nav bar
+	self.showNav = ko.observable(true);
+	//nav bar toggling function
+	self.toggleNav = function() {
+        self.showNav(!self.showNav());
+    };
 
 	self.list = ko.observableArray();
 	//stores the user input query
@@ -197,14 +227,7 @@ var viewModel = function() {
 	});
 };
 
-//jquery to toggle between navigation bar
-$("#toggleNav").click(function(){
-    $(".searchBar").animate({
-    	height: "toggle"
-    });
-});
-
 //function to display alert when map api is broken
 function error() {
-	alert("Something went wrong. Please try again.");
+	alert("Something went wrong. Please check the data.");
 }
