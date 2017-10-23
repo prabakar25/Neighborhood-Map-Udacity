@@ -16,7 +16,7 @@ html {
 	width: 100%;
 }
 
-.searchBar {
+.SearchBar {
 	position: absolute;
 	z-index: 2;
 	right: 10px;
@@ -27,24 +27,24 @@ html {
 	border: solid 2px black;
 }
 
-.searchBarHeading {
+.SearchBarHeading {
 	margin-left: 20px;
 }
 
-.searchBox {
+.SearchBox {
 	position: absolute;
 	z-index: 2;
 	padding-left: 10px;
 	color: black;
 }
 
-.searchBox input {
+.SearchBox input {
 	width: 250px;
 	border-radius: 5px;
 	box-shadow: solid 5px 5px 5px white;
 }
 
-.scroll-list {
+.Scroll-list {
 	max-height: 300px;
 	overflow: scroll;
 	margin-top: 40px;
@@ -64,7 +64,7 @@ li:hover {
 	font-weight: bold;
 }
 
-.toggleButton {
+.ToggleButton {
 	position: absolute;
 	z-index: 2;
 	right: 10px;
@@ -74,7 +74,7 @@ li:hover {
 #toggleNav {
     background-color: black;
     color: white;
-    border: 2px solid #555555;
+    border: 2px solid white;
 }
 
 #toggleNav:hover {
